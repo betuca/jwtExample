@@ -1,9 +1,27 @@
 const express = require("express");
+const axios = require("axios");
 
 const app = express();
 
-app.get("/load", (req, res) => {
-  console.log("first I have to login");
+const LOCAL_HOST = "http://localhost";
+const LOGIN_HOST = LOCAL_HOST + ":5000";
+const USER_HOST = LOCAL_HOST + ":5002";
+
+app.get("/load", async (req, res) => {
+  console.log("> login");
+
+  await axios
+    .post(LOGIN_HOST + "/login", {
+      login: "betuca",
+      password: "12345",
+    })
+    .then((response) => {
+      console.log(response.data);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+
   res.json({ message: "nothing loaded yet!" });
 });
 
