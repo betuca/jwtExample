@@ -2,7 +2,7 @@ const express = require("express");
 
 const app = express();
 
-app.get("/get-user", (req, res) => {
+app.get("/load", (req, res) => {
   console.log("first I have to login");
   res.json({ message: "nothing loaded yet!" });
 });
