@@ -10,5 +10,5 @@ app.get("/login", (req, res) => {
 });
 
 app.listen(5000, () => {
-  console.log("running at port 5000!");
+  console.log("login service listening port 5000!");
 });
