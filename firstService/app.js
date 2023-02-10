@@ -31,7 +31,8 @@ app.get("/load", async (req, res) => {
     console.log(error.message);
   });
 
-  await axios.get(USER_HOST + "/user/1", config("somthing-here"))
+  const authToken = "Bearer " + token;
+  await axios.get(USER_HOST + "/user/1", config(authToken))
   .then((response) => {
     console.log(response.data);
   })
