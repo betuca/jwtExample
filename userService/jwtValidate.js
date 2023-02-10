@@ -1,6 +1,6 @@
 const fs = require('fs');
 const jwt = require('jsonwebtoken');
-const {DELAY} = require("./constants");
+const {DELAY, printAndWait} = require("./constants");
 
 const publicKey = fs.readFileSync('./secrets/public.key', 'utf8');
 
@@ -12,20 +12,16 @@ const verifyOptions = {
 };
 
 const jwtValidate = async (req, res, next) => {
-  console.log("> (middleware) info request received");
-  await new Promise(resolve => setTimeout(resolve, DELAY));
+  await printAndWait("(middleware) info request received");
 
   const authHeader = req.headers['authorization'];
-  console.log("> authHeader: ", authHeader);
-  await new Promise(resolve => setTimeout(resolve, DELAY));
+  await printAndWait("authHeader: " + authHeader);
 
   if (typeof authHeader !== 'undefined') {
     const token = authHeader.split(' ')[1];
-    console.log("> token from request: ", token);
-    await new Promise(resolve => setTimeout(resolve, DELAY));
+    await printAndWait("token from request: ", token);
     try {
-      console.log("> verifying JWT");
-      await new Promise(resolve => setTimeout(resolve, DELAY));
+      await printAndWait("> verifying JWT");
 
       const validationResult = jwt.verify(token, publicKey, verifyOptions);
       console.log("> JWT verification result: " + JSON.stringify(validationResult));

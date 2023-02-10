@@ -1,6 +1,6 @@
 const express = require("express");
 const axios = require("axios");
-const {DELAY} = require("./constants");
+const {DELAY, printAndWaitWithBorders, printWithBorders} = require("./constants");
 
 const app = express();
 
@@ -17,13 +17,9 @@ const config = (value) => {
 };
 
 app.get("/load", async (req, res) => {
-  console.log("----------------------------");
-  console.log("> Beginning loading process");
-  console.log("----------------------------");
-  await new Promise(resolve => setTimeout(resolve, DELAY));
+  await printAndWaitWithBorders("Beginning loading process");
 
-  console.log("> sending login request");
-  await new Promise(resolve => setTimeout(resolve, DELAY));
+  await printAndWaitWithBorders("sending login request");
 
   let token;
   let errorFlow = false;
@@ -32,14 +28,12 @@ app.get("/load", async (req, res) => {
     password: "11111",
   })
   .then((response) => {
-    console.log(response.data);
+    // console.log(response.data);
     token = response.data.token;
     console.log("> token received: ", token);
   })
   .catch((error) => {
-    console.log("----------------------------");
-    console.log("> Loading process FAILED! :(");
-    console.log("----------------------------");
+    printWithBorders("Loading process FAILED! :(");
     console.log(error.message);
     errorFlow = true;
   });
@@ -63,9 +57,7 @@ app.get("/load", async (req, res) => {
     res.sendStatus(500);
   })
 
-  console.log("----------------------------");
-  console.log("> Loading process finished!");
-  console.log("----------------------------");
+  printWithBorders("Loading process finished!");
   res.json({message: responseData});
 });
 

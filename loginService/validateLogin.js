@@ -6,7 +6,7 @@ const DB = {
 };
 
 const validateLogin = (login, password) => {
-  console.log("chekcing login and passowrd in DB");
+  console.log("> chekcing login and passowrd in DB");
   return DB[login] === password;
 };
 

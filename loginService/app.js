@@ -2,7 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const { validateLogin } = require("./validateLogin.js");
 const { jwtSign } = require("./jwtSign");
-const {DELAY} = require("./constants");
+const {DELAY, printAndWaitWithBorders, printAndWait, printWithBorders} = require("./constants");
 
 const app = express();
 
@@ -15,29 +15,21 @@ app.use(
 );
 
 app.post("/login", async (req, res) => {
-  console.log("----------------------------");
-  console.log("> Beginning login process");
-  console.log("----------------------------");
-  await new Promise(resolve => setTimeout(resolve, DELAY));
+  await printAndWaitWithBorders("Beginning login process");
 
   const login = req.body.login;
   const password = req.body.password;
 
-  console.log("> login request received for user: ", login, " and password: ", password);
-  await new Promise(resolve => setTimeout(resolve, DELAY));
+  await printAndWait("login request received for user: " + login + " and password: " + password);
 
   if (validateLogin(login, password)) {
-    console.log("> login valid. Creating token.");
-    await new Promise(resolve => setTimeout(resolve, DELAY));
+    await printAndWait("login valid. Creating token.");
 
     const token = jwtSign(login);
 
-    console.log("> Responding request with token.");
-    await new Promise(resolve => setTimeout(resolve, DELAY));
+    await printAndWait("Responding request with token.");
 
-    console.log("----------------------------");
-    console.log("> login process finished!");
-    console.log("----------------------------");
+    printWithBorders("login process finished!");
 
     res.json({
       message: "login valid",
@@ -45,9 +37,7 @@ app.post("/login", async (req, res) => {
     });
   } else {
     console.log("> invalid login / password");
-    console.log("----------------------------");
-    console.log("> login process finished!");
-    console.log("----------------------------");
+    printWithBorders("login process finished!");
     await new Promise(resolve => setTimeout(resolve, DELAY));
 
     res.sendStatus(401);
