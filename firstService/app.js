@@ -17,9 +17,11 @@ app.get("/load", async (req, res) => {
     })
     .then((response) => {
       console.log(response.data);
+      const token = response.data.token;
+      console.log("token received: ", token);
     })
     .catch((error) => {
-      console.log(error);
+      console.log(error.message);
     });
 
   res.json({ message: "nothing loaded yet!" });

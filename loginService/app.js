@@ -1,6 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const { validateLogin } = require("./validateLogin.js");
+const { jwtSign } = require("./jwtSign");
 
 const app = express();
 
@@ -18,10 +19,13 @@ app.post("/login", (req, res) => {
   console.log("> user: ", login, " loging in with password: ", password);
   if (validateLogin(login, password)) {
     console.log("valid login");
+    const token = jwtSign(login);
     res.json({
       message: "valid login",
+      token
     });
   } else {
+    console.log("invalid login / password");
     res.sendStatus(401);
   }
 });
