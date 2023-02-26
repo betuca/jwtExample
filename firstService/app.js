@@ -24,8 +24,8 @@ app.get("/load", async (req, res) => {
   let token;
   let errorFlow = false;
   await axios.post(LOGIN_HOST + "/login", {
-    login: "maria",
-    password: "11111",
+    login: "andrea",
+    password: "harry",
   })
   .then((response) => {
     // console.log(response.data);

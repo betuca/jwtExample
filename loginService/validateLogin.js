@@ -2,7 +2,7 @@
 const DB = {
   betuca: '12345',
   maria: '11111',
-  pepe: '22222'
+  andrea: 'harry'
 };
 
 const validateLogin = (login, password) => {
